@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { useTable, useSortBy, Cell, CellValue, CellProps, TableCellProps, TableRowProps, Row } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import "./table.scss";
 
 const Table = ({ data }: any) => {
@@ -41,7 +41,7 @@ const Table = ({ data }: any) => {
           return "no data";
         }
       },
-      Cell: ({ row: { original } }: CellValue): any => {
+      Cell: ({ row: { original } }: any): any => {
         const diff = original.currPrice - original.openPrice;
         if (diff === 0) {
           return 0;
