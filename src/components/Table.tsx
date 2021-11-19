@@ -3,9 +3,13 @@ import { TableDataProps } from "../interfaces";
 import { useTable, useSortBy, CellValue, Column } from "react-table";
 import "./table.scss";
 
+interface TableProps {
+  data: TableDataProps[];
+}
+
 type CellReturn = number | string;
 
-const Table = ({ data }: any) => {
+const Table = ({ data }: TableProps) => {
   const columns: Column<TableDataProps>[] = useMemo(() => [
     {
       Header: "Coin Name",
