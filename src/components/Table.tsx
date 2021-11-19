@@ -1,10 +1,12 @@
 import React, { useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import { TableDataProps } from "../interfaces";
+import { useTable, useSortBy, CellValue, Column } from "react-table";
 import "./table.scss";
 
+type CellReturn = number | string;
+
 const Table = ({ data }: any) => {
-  console.log("Table data:", data);
-  const columns = useMemo(() => [
+  const columns: Column<TableDataProps>[] = useMemo(() => [
     {
       Header: "Coin Name",
       accessor: "fullName",
@@ -12,7 +14,7 @@ const Table = ({ data }: any) => {
     {
       Header: "Current Price (USD)",
       accessor: "currPrice",
-      Cell: ({ row: { original } }: any): any => {
+      Cell: ({ row: { original } }: CellValue): CellReturn => {
         if (original.currPrice) {
           return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(original.currPrice);
         } else {
@@ -23,7 +25,7 @@ const Table = ({ data }: any) => {
     {
       Header: "Opening Price (USD)",
       accessor: "openPrice",
-      Cell: ({ row: { original } }: any): any => {
+      Cell: ({ row: { original } }: CellValue): CellReturn => {
         if (original.openPrice) {
           return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(original.openPrice);
         } else {
@@ -33,15 +35,13 @@ const Table = ({ data }: any) => {
     },
     {
       Header: "Price Increase",
-      accessor: (row: any) => {
+      accessor: (row: TableDataProps) => {
         const diff = row.currPrice - row.openPrice;
         if (!isNaN(diff)) {
           return diff;
-        } else {
-          return "no data";
         }
       },
-      Cell: ({ row: { original } }: any): any => {
+      Cell: ({ row: { original } }: CellValue): CellReturn => {
         const diff = original.currPrice - original.openPrice;
         if (diff === 0) {
           return 0;
@@ -90,22 +90,22 @@ const Table = ({ data }: any) => {
             </tr>
           ))}
         </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map(
-              (row, _i) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => {
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                      )
-                    })}
-                  </tr>
-                )
-              }
-            )}
-          </tbody>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(
+            (row, _i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    )
+                  })}
+                </tr>
+              )
+            }
+          )}
+        </tbody>
       </table>
     </div>
   );

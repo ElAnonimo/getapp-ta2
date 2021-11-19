@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { AxiosResponse } from "axios";
 import Select from "react-select";
+import { TableDataProps } from "./interfaces";
 import Table from "./components/Table";
 import api from "./api";
 import { styles } from "./utils/selectStyles";
@@ -8,7 +9,7 @@ import "./App.scss";
 
 const App = () => {
   const [coinList, setCoinList] = useState<Object[]>([]);
-  const [tableData, setTableData] = useState<Object[]>([]);
+  const [tableData, setTableData] = useState<TableDataProps[]>([]);
   const [coinSymbolList, setCoinSymbolList] = useState<String[]>([]);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const App = () => {
 
   useEffect(() => {
     const fsyms = coinSymbolList.join();
-    const tableStats: Object[] = [];
+    const tableStats: TableDataProps[] = [];
 
     const getTableData = async () => {
       try {
