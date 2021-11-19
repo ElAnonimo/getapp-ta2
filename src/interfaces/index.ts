@@ -3,3 +3,7 @@ export interface TableDataProps {
   currPrice: number;
   openPrice: number;
 }
+
+export interface TableProps {
+  data: TableDataProps[];
+}

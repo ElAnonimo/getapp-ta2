@@ -1,11 +1,7 @@
 import React, { useMemo } from "react";
-import { TableDataProps } from "../interfaces";
+import { TableDataProps, TableProps } from "../interfaces";
 import { useTable, useSortBy, CellValue, Column } from "react-table";
 import "./table.scss";
-
-interface TableProps {
-  data: TableDataProps[];
-}
 
 type CellReturn = number | string;
 
