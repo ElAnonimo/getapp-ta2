@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import { useTable, useSortBy, Cell, CellValue, CellProps, TableCellProps, TableRowProps, Row } from "react-table";
 import "./table.scss";
 
 const Table = ({ data }: any) => {
+  console.log("Table data:", data);
   const columns = useMemo(() => [
     {
       Header: "Coin Name",
@@ -40,7 +41,7 @@ const Table = ({ data }: any) => {
           return "no data";
         }
       },
-      Cell: ({ row: { original } }: any): any => {
+      Cell: ({ row: { original } }: CellValue): any => {
         const diff = original.currPrice - original.openPrice;
         if (diff === 0) {
           return 0;
@@ -89,22 +90,22 @@ const Table = ({ data }: any) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(
-            (row, _i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    )
-                  })}
-                </tr>
-              )
-            }
-          )}
-        </tbody>
+          <tbody {...getTableBodyProps()}>
+            {rows.map(
+              (row, _i) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map(cell => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      )
+                    })}
+                  </tr>
+                )
+              }
+            )}
+          </tbody>
       </table>
     </div>
   );

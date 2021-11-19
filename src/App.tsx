@@ -7,8 +7,8 @@ import { styles } from "./utils/selectStyles";
 import "./App.scss";
 
 const App = () => {
-  const [coinList, setCoinList] = useState([{}]);
-  const [tableData, setTableData] = useState([{}]);
+  const [coinList, setCoinList] = useState<Object[]>([]);
+  const [tableData, setTableData] = useState<Object[]>([]);
   const [coinSymbolList, setCoinSymbolList] = useState<String[]>([]);
 
   useEffect(() => {
